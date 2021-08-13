@@ -1,6 +1,5 @@
 package com.zupacademy.kleysson.proposta.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.zupacademy.kleysson.proposta.config.validation.CPFouCNPJ;
 import com.zupacademy.kleysson.proposta.model.Proposta;
 
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class PropostaRequest {
 

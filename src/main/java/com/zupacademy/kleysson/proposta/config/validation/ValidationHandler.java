@@ -1,9 +1,11 @@
 package com.zupacademy.kleysson.proposta.config.validation;
 
+import com.zupacademy.kleysson.proposta.config.exceptions.ApiErroException;
 import com.zupacademy.kleysson.proposta.dto.ErrorFormatDTO;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,5 +36,12 @@ public class ValidationHandler {
         });
 
         return dto;
+    }
+
+    @ExceptionHandler(ApiErroException.class)
+    public ResponseEntity<ErrorFormatDTO> handleApiErroException(ApiErroException exception) {
+        ErrorFormatDTO error = new ErrorFormatDTO(exception.getField(), exception.getReason());
+
+        return ResponseEntity.status(exception.getHttpStatus()).body(error);
     }
 }
