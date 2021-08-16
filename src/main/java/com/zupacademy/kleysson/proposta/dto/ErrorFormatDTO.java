@@ -1,16 +1,16 @@
 package com.zupacademy.kleysson.proposta.dto;
 
 public class ErrorFormatDTO {
-    private String campo;
+    private String causa;
     private String erro;
 
-    public ErrorFormatDTO(String campo, String erro) {
-        this.campo = campo;
+    public ErrorFormatDTO(String causa, String erro) {
+        this.causa = causa;
         this.erro = erro;
     }
 
-    public String getCampo() {
-        return campo;
+    public String getCausa() {
+        return causa;
     }
 
     public String getErro() {

@@ -1,10 +1,14 @@
 package com.zupacademy.kleysson.proposta.controller;
 
+import com.zupacademy.kleysson.proposta.config.exceptions.ApiErroException;
 import com.zupacademy.kleysson.proposta.dto.request.PropostaRequest;
-import com.zupacademy.kleysson.proposta.dto.response.RespostaAnaliseResponse;
+import com.zupacademy.kleysson.proposta.dto.response.SolicitarAnaliseResponse;
 import com.zupacademy.kleysson.proposta.model.Proposta;
 import com.zupacademy.kleysson.proposta.repository.PropostaRepository;
-import com.zupacademy.kleysson.proposta.utils.services.AnaliseSolicitante;
+import com.zupacademy.kleysson.proposta.utils.services.AnaliseSolicitanteClient;
+import feign.FeignException;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,15 +23,14 @@ import java.util.Optional;
 public class PropostaController {
 
     private final PropostaRepository propostaRepository;
-    private final AnaliseSolicitante analiseSolicitante;
+    private final AnaliseSolicitanteClient analiseSolicitanteClient;
 
-    public PropostaController(PropostaRepository propostaRepository, AnaliseSolicitante analiseSolicitante) {
+    public PropostaController(PropostaRepository propostaRepository, AnaliseSolicitanteClient analiseSolicitanteClient) {
         this.propostaRepository = propostaRepository;
-        this.analiseSolicitante = analiseSolicitante;
+        this.analiseSolicitanteClient = analiseSolicitanteClient;
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder uriBuilder) {
         Optional<Proposta> verificaProposta = propostaRepository.findByDocumento(request.getDocumento());
         if(verificaProposta.isPresent())
@@ -37,8 +40,14 @@ public class PropostaController {
 
         propostaRepository.save(proposta);
 
-        RespostaAnaliseResponse analise = analiseSolicitante.enviar(proposta);
-        proposta.atualizarStatus(analise.getResultadoSolicitacao());
+        try {
+            SolicitarAnaliseResponse analise = analiseSolicitanteClient.solicitarAnalise(proposta.analisarSolicitante());
+            proposta.atualizarStatus(analise.getResultadoSolicitacao());
+            propostaRepository.save(proposta);
+        }
+        catch (FeignException e) {
+            throw new ApiErroException(HttpStatus.BAD_REQUEST, "Erro ao analisar solicitante", "analise_solicitante");
+        }
 
         URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).build();

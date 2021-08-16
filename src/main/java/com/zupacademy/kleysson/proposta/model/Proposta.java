@@ -1,5 +1,6 @@
 package com.zupacademy.kleysson.proposta.model;
 
+import com.zupacademy.kleysson.proposta.dto.request.SolicitarAnaliseRequest;
 import com.zupacademy.kleysson.proposta.utils.enums.StatusAnalise;
 import com.zupacademy.kleysson.proposta.utils.enums.StatusProposta;
 import org.springframework.util.Assert;
@@ -59,15 +60,11 @@ public class Proposta {
         return id;
     }
 
-    public String getDocumento() {
-        return documento;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
     public void atualizarStatus(StatusAnalise status) {
         this.statusProposta = status.toProposta();
+    }
+
+    public SolicitarAnaliseRequest analisarSolicitante(){
+        return new SolicitarAnaliseRequest(documento, nome, id.toString());
     }
 }

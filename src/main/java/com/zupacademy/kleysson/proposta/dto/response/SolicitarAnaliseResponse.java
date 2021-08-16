@@ -2,7 +2,7 @@ package com.zupacademy.kleysson.proposta.dto.response;
 
 import com.zupacademy.kleysson.proposta.utils.enums.StatusAnalise;
 
-public class RespostaAnaliseResponse {
+public class SolicitarAnaliseResponse {
 
     private String documento;
     private String nome;
