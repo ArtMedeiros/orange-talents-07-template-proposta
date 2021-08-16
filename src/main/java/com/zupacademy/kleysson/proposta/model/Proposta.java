@@ -1,11 +1,10 @@
 package com.zupacademy.kleysson.proposta.model;
 
+import com.zupacademy.kleysson.proposta.utils.enums.StatusAnalise;
+import com.zupacademy.kleysson.proposta.utils.enums.StatusProposta;
 import org.springframework.util.Assert;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,6 +31,10 @@ public class Proposta {
     private String endereco;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusProposta statusProposta;
+
+    @NotNull
     private BigDecimal salario;
 
     private Proposta() {}
@@ -49,9 +52,22 @@ public class Proposta {
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
+        this.statusProposta = StatusProposta.NAO_ELEGIVEL;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void atualizarStatus(StatusAnalise status) {
+        this.statusProposta = status.toProposta();
     }
 }
