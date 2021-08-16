@@ -11,5 +11,4 @@ public interface AnaliseSolicitanteClient {
 
     @PostMapping("api/solicitacao")
     SolicitarAnaliseResponse solicitarAnalise(@RequestBody SolicitarAnaliseRequest request);
-
 }

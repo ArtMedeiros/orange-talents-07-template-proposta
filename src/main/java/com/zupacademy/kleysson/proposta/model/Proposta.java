@@ -38,6 +38,8 @@ public class Proposta {
     @NotNull
     private BigDecimal salario;
 
+    private String numeroCartao;
+
     private Proposta() {}
 
     @Valid
@@ -66,5 +68,9 @@ public class Proposta {
 
     public SolicitarAnaliseRequest analisarSolicitante(){
         return new SolicitarAnaliseRequest(documento, nome, id.toString());
+    }
+
+    public void associarCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
     }
 }
