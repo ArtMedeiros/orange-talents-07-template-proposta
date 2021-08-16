@@ -62,6 +62,30 @@ public class Proposta {
         return id;
     }
 
+    public StatusProposta getStatusProposta() {
+        return statusProposta;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
     public void atualizarStatus(StatusAnalise status) {
         this.statusProposta = status.toProposta();
     }
