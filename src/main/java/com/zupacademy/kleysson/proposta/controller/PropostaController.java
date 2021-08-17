@@ -8,15 +8,12 @@ import com.zupacademy.kleysson.proposta.model.Proposta;
 import com.zupacademy.kleysson.proposta.repository.PropostaRepository;
 import com.zupacademy.kleysson.proposta.utils.services.AnaliseSolicitanteClient;
 import feign.FeignException;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.Optional;
 
