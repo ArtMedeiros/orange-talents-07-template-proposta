@@ -14,6 +14,12 @@ public class ApiErroException extends RuntimeException{
         this.field = field;
     }
 
+    public ApiErroException(Integer statusCode, String reason, String field){
+        this.httpStatus = HttpStatus.valueOf(statusCode);
+        this.reason = reason;
+        this.field = field;
+    }
+
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
