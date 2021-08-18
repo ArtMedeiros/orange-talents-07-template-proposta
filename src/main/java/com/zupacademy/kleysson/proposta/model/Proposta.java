@@ -38,7 +38,8 @@ public class Proposta {
     @NotNull
     private BigDecimal salario;
 
-    private String numeroCartao;
+    @OneToOne(mappedBy = "proposta", cascade = CascadeType.MERGE)
+    private Cartao cartao;
 
     private Proposta() {}
 
@@ -86,15 +87,15 @@ public class Proposta {
         return salario;
     }
 
+    public Cartao getCartao() {
+        return cartao;
+    }
+
     public void atualizarStatus(StatusAnalise status) {
         this.statusProposta = status.toProposta();
     }
 
     public SolicitarAnaliseRequest analisarSolicitante(){
         return new SolicitarAnaliseRequest(documento, nome, id.toString());
-    }
-
-    public void associarCartao(String numeroCartao) {
-        this.numeroCartao = numeroCartao;
     }
 }

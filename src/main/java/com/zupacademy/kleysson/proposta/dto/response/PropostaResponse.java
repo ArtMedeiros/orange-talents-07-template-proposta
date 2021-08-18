@@ -1,13 +1,8 @@
 package com.zupacademy.kleysson.proposta.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.zupacademy.kleysson.proposta.model.Proposta;
 import com.zupacademy.kleysson.proposta.utils.enums.StatusProposta;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class PropostaResponse {
