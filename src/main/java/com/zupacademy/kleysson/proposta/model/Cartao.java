@@ -37,6 +37,9 @@ public class Cartao {
     @ManyToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private Set<AvisoViagem> viagens = new HashSet<>();
 
+    @ManyToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private Set<CarteiraPagamento> carteiras = new HashSet<>();
+
     private Cartao() {}
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite, Proposta proposta) {
@@ -67,5 +70,18 @@ public class Cartao {
         return proposta;
     }
 
+    //
+
+
+    public Set<Biometria> getBiometrias() {
+        return biometrias;
+    }
+
+    public Set<AvisoViagem> getViagens() {
+        return viagens;
+    }
+
+    public Set<CarteiraPagamento> getCarteiras() {
+        return carteiras;
     }
 }

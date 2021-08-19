@@ -15,6 +15,7 @@ public class Metricas {
     private Counter counterCartoesAssociados;
     private Counter counterCadastroBiometria;
     private Counter counterAvisosViagem;
+    private Counter counterCarteirasAssociadas;
 
     public Metricas(MeterRegistry registry) {
         this.registry = registry;
@@ -29,6 +30,7 @@ public class Metricas {
         this.counterCartoesAssociados = this.registry.counter("cartoes_associados", "responsavel", "API Legada");
         this.counterCadastroBiometria = this.registry.counter("biometrias");
         this.counterAvisosViagem = this.registry.counter("avisos_viagem");
+        this.counterCarteirasAssociadas = this.registry.counter("carteiras_associadas", "responsavel", "API Legada");
     }
 
     public void incrementarPropostas(){
@@ -53,5 +55,9 @@ public class Metricas {
 
     public void incrementarAvisosViagem() {
         this.counterAvisosViagem.increment();
+    }
+
+    public void incrementarCarteirasAssosciadas() {
+        this.counterCarteirasAssociadas.increment();
     }
 }
