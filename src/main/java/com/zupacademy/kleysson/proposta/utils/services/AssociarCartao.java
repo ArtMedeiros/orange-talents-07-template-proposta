@@ -21,12 +21,14 @@ public class AssociarCartao {
     private final ConsultarCartaoClient consultarCartaoClient;
     private final PropostaRepository propostaRepository;
     private final CartaoRepository cartaoRepository;
+    private final Metricas metricas;
     private final Logger logger;
 
-    public AssociarCartao(ConsultarCartaoClient consultarCartaoClient, PropostaRepository propostaRepository, CartaoRepository cartaoRepository) {
+    public AssociarCartao(ConsultarCartaoClient consultarCartaoClient, PropostaRepository propostaRepository, CartaoRepository cartaoRepository, Metricas metricas) {
         this.consultarCartaoClient = consultarCartaoClient;
         this.propostaRepository = propostaRepository;
         this.cartaoRepository = cartaoRepository;
+        this.metricas = metricas;
         this.logger = LoggerFactory.getLogger(AssociarCartao.class);
     }
 
@@ -39,6 +41,7 @@ public class AssociarCartao {
             Cartao cartao = consultarCartao(p.getId());
             if (Objects.nonNull(cartao)){
                 cartaoRepository.save(cartao);
+                metricas.incrementarCartoesAssociados();
             }
         });
     }

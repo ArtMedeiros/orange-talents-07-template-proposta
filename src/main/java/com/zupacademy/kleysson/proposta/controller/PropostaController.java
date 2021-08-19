@@ -7,7 +7,9 @@ import com.zupacademy.kleysson.proposta.dto.response.SolicitarAnaliseResponse;
 import com.zupacademy.kleysson.proposta.model.Proposta;
 import com.zupacademy.kleysson.proposta.repository.PropostaRepository;
 import com.zupacademy.kleysson.proposta.utils.services.AnaliseSolicitanteClient;
+import com.zupacademy.kleysson.proposta.utils.services.Metricas;
 import feign.FeignException;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,12 @@ import java.util.Optional;
 @RequestMapping("/propostas")
 public class PropostaController {
 
+    private final Metricas metricas;
     private final PropostaRepository propostaRepository;
     private final AnaliseSolicitanteClient analiseSolicitanteClient;
 
-    public PropostaController(PropostaRepository propostaRepository, AnaliseSolicitanteClient analiseSolicitanteClient) {
+    public PropostaController(MeterRegistry registry, Metricas metricas, PropostaRepository propostaRepository, AnaliseSolicitanteClient analiseSolicitanteClient) {
+        this.metricas = metricas;
         this.propostaRepository = propostaRepository;
         this.analiseSolicitanteClient = analiseSolicitanteClient;
     }
@@ -38,6 +42,7 @@ public class PropostaController {
         Proposta proposta = request.toModel();
 
         propostaRepository.save(proposta);
+        metricas.incrementarPropostas();
 
         try {
             SolicitarAnaliseResponse analise = analiseSolicitanteClient.solicitarAnalise(proposta.analisarSolicitante());
