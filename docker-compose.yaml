@@ -149,8 +149,8 @@ services:
       FORMAT_SQL: 'false'
       ANALISE_HOST: http://analise:9999
       CARTAO_HOST: http://contas:8888
-      #JWT_EXPIRATION: 86400000
-      #JWT_SECRET: vpo/oqf/hjPw!Gw\jRD@xam*xG=aEFTats,SUZV/b/S$/h$l:u_kiuMxNvtAtsDscAar:FH.LuM#y*a!gJ$DiixUQMXxMPoU#VW\tA*$&s.kC@alzwah$CbkMxt#B&RHYaSg,:MC@ILqZFEwc-nWPJ:hNs.ypoW*FBHI-IXDKaJKccZnuQz;Fkex:b@MB@V#XNteSX*&/faPKe_jTH$RRUahd+C%XgL+@=cWp+LpZWSxbx,Lbr+qZpx;j\Iq%WmO
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/propostas
+      KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/propostas/protocol/openid-connect/certs
 
   mysqlsrv:
     image: mysql

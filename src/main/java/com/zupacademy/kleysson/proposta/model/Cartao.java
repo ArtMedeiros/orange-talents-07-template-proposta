@@ -1,12 +1,16 @@
 package com.zupacademy.kleysson.proposta.model;
 
+import com.zupacademy.kleysson.proposta.dto.response.AvisoViagemResponse;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cartao {
@@ -24,11 +28,14 @@ public class Cartao {
     @NotNull
     private BigDecimal limite;
 
-    @ManyToOne
+    @OneToOne
     private Proposta proposta;
 
     @ManyToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private Set<Biometria> biometrias = new HashSet<>();
+
+    @ManyToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private Set<AvisoViagem> viagens = new HashSet<>();
 
     private Cartao() {}
 
@@ -60,18 +67,5 @@ public class Cartao {
         return proposta;
     }
 
-    public void adicionarBiometria(Biometria biometria){
-        this.biometrias.add(biometria);
-    }
-
-    @Override
-    public String toString() {
-        return "Cartao{" +
-                "emitidoEm=" + emitidoEm +
-                ", titular='" + titular + '\'' +
-                ", limite=" + limite +
-                ", proposta=" + proposta +
-                ", biometrias=" + biometrias +
-                '}';
     }
 }

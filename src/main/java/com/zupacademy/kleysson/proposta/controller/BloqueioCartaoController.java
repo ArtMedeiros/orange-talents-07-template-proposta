@@ -51,8 +51,8 @@ public class BloqueioCartaoController {
             BloquearCartaoRequest bloqueioRequest = new BloquearCartaoRequest("Proposta");
             BloqueioCartaoResponse bloqueioResponse = consultarCartaoClient.bloquearCartao(id, bloqueioRequest);
 
-            if(bloqueioResponse.getResultado().equals(StatusBloqueio.BLOQUEADO)){
-                BloqueioCartao bloqueio = bloqueioResponse.toModel(cartaoRepository, request, cartaoBanco.get());
+            if(verificarBloqueio(bloqueioResponse)){
+                BloqueioCartao bloqueio = bloqueioResponse.toModel(request, cartaoBanco.get());
                 bloqueioCartaoRepository.save(bloqueio);
                 metricas.incrementarBloqueiosRealizados();
             }
@@ -63,5 +63,9 @@ public class BloqueioCartaoController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    private boolean verificarBloqueio(BloqueioCartaoResponse response) {
+        return response.getResultado().equals(StatusBloqueio.BLOQUEADO);
     }
 }

@@ -17,7 +17,7 @@ public class BloqueioCartaoResponse {
         return resultado;
     }
 
-    public BloqueioCartao toModel(CartaoRepository cartaoRepository, HttpServletRequest request, Cartao cartao) {
+    public BloqueioCartao toModel(HttpServletRequest request, Cartao cartao) {
         String ipCliente = request.getRemoteAddr();
         String userAgent = request.getHeader("User-Agent");
 

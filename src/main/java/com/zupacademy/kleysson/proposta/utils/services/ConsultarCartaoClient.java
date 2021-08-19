@@ -1,6 +1,8 @@
 package com.zupacademy.kleysson.proposta.utils.services;
 
+import com.zupacademy.kleysson.proposta.dto.request.AvisoViagemRequest;
 import com.zupacademy.kleysson.proposta.dto.request.BloquearCartaoRequest;
+import com.zupacademy.kleysson.proposta.dto.response.AvisoViagemResponse;
 import com.zupacademy.kleysson.proposta.dto.response.BloqueioCartaoResponse;
 import com.zupacademy.kleysson.proposta.dto.response.DadosCartaoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,4 +18,7 @@ public interface ConsultarCartaoClient {
 
     @PostMapping("/api/cartoes/{id}/bloqueios")
     BloqueioCartaoResponse bloquearCartao(@PathVariable String id, @RequestBody @Valid BloquearCartaoRequest request);
+
+    @PostMapping("/api/cartoes/{id}/avisos")
+    AvisoViagemResponse notificarViagem(@PathVariable String id, @RequestBody @Valid AvisoViagemRequest request);
 }
