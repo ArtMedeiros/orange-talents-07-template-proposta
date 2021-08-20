@@ -64,6 +64,7 @@ public class PropostaController {
         if (propostaBanco.isEmpty())
             return ResponseEntity.notFound().build();
 
+        metricas.incrementarStatusProposta();
         return ResponseEntity.ok(new PropostaResponse(propostaBanco.get()));
     }
 }

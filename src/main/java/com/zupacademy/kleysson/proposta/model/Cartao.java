@@ -1,16 +1,12 @@
 package com.zupacademy.kleysson.proposta.model;
 
-import com.zupacademy.kleysson.proposta.dto.response.AvisoViagemResponse;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 public class Cartao {
@@ -40,6 +36,9 @@ public class Cartao {
     @ManyToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private Set<CarteiraPagamento> carteiras = new HashSet<>();
 
+    @OneToOne(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private BloqueioCartao bloqueio;
+
     private Cartao() {}
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite, Proposta proposta) {
@@ -68,20 +67,5 @@ public class Cartao {
 
     public Proposta getProposta() {
         return proposta;
-    }
-
-    //
-
-
-    public Set<Biometria> getBiometrias() {
-        return biometrias;
-    }
-
-    public Set<AvisoViagem> getViagens() {
-        return viagens;
-    }
-
-    public Set<CarteiraPagamento> getCarteiras() {
-        return carteiras;
     }
 }
