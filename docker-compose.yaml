@@ -140,7 +140,9 @@ services:
       - 8083:8080
     depends_on: 
       - mysqlsrv
-    environment: 
+      - contas
+      - analise
+    environment:
       DATASOURCE_URL: jdbc:mysql://mysqlsrv:3306/proposta?serverTimezone=UTC
       DATASOURCE_USER: root
       DATASOURCE_PASSWORD: MySql2019!
@@ -151,6 +153,10 @@ services:
       CARTAO_HOST: http://contas:8888
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/propostas
       KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/propostas/protocol/openid-connect/certs
+      JAEGER_SAMPLER: true
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      JAEGER_ENABLED: true
+      APP_NAME: propostas
 
   mysqlsrv:
     image: mysql

@@ -34,7 +34,7 @@ public class PropostaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> cadastrarProposta(@RequestBody @Valid PropostaRequest request, UriComponentsBuilder uriBuilder) {
         Optional<Proposta> verificaProposta = propostaRepository.findByDocumento(request.getDocumento());
         if(verificaProposta.isPresent())
             return ResponseEntity.status(422).build();

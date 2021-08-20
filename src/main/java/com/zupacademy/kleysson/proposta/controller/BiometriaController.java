@@ -29,7 +29,7 @@ public class BiometriaController {
     }
 
     @PostMapping("/{cartaoId}")
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid BiometriaRequest request, @PathVariable String cartaoId, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> cadastrarBiometria(@RequestBody @Valid BiometriaRequest request, @PathVariable String cartaoId, UriComponentsBuilder uriBuilder) {
         if(!checarIntegridade(request.getFingerprint()))
             return ResponseEntity.badRequest().build();
 
