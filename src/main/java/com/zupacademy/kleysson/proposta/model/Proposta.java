@@ -44,14 +44,14 @@ public class Proposta {
     private Proposta() {}
 
     @Valid
-    public Proposta(@NotBlank String documento, @NotBlank String email, @NotBlank String nome, @NotBlank String endereco, @NotNull @Positive BigDecimal salario) {
-        Assert.hasLength(documento, "O número do documento deve ser preenchido");
+    public Proposta(@NotNull DocumentoLimpo documento, @NotBlank String email, @NotBlank String nome, @NotBlank String endereco, @NotNull @Positive BigDecimal salario) {
+        Assert.notNull(documento, "O número do documento deve ser preenchido");
         Assert.hasLength(email, "O e-mail deve ser preenchido");
         Assert.hasLength(nome, "O nome deve ser preenchido");
         Assert.hasLength(endereco, "O endereço deve ser preenchido");
         Assert.notNull(salario, "O valor do salário deve ser preenchido");
 
-        this.documento = documento;
+        this.documento = documento.documentoEncriptado();
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;

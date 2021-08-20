@@ -1,6 +1,7 @@
 package com.zupacademy.kleysson.proposta.dto.request;
 
 import com.zupacademy.kleysson.proposta.config.validation.CPFouCNPJ;
+import com.zupacademy.kleysson.proposta.model.DocumentoLimpo;
 import com.zupacademy.kleysson.proposta.model.Proposta;
 
 import javax.validation.constraints.Email;
@@ -50,6 +51,6 @@ public class PropostaRequest {
     }
 
     public Proposta toModel() {
-        return new Proposta(documento, email, nome, endereco, salario);
+        return new Proposta(new DocumentoLimpo(documento), email, nome, endereco, salario);
     }
 }
