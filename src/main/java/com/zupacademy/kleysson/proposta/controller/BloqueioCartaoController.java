@@ -15,9 +15,11 @@ import feign.FeignException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,7 +38,7 @@ public class BloqueioCartaoController {
     }
 
     @PostMapping("/cartoes/{id}/bloqueio")
-    public ResponseEntity<?> bloquearCartao(@PathVariable String id, HttpServletRequest request) {
+    public ResponseEntity<?> bloquearCartao(@PathVariable String id, @RequestHeader("User-Agent") String userAgent, @RequestHeader("X-Forwarded-For") List<String> ipCliente) {
         Optional<Cartao> cartaoBanco = cartaoRepository.findById(id);
 
         if(cartaoBanco.isEmpty())
@@ -52,7 +54,7 @@ public class BloqueioCartaoController {
             BloqueioCartaoResponse bloqueioResponse = consultarCartaoClient.bloquearCartao(id, bloqueioRequest);
 
             if(verificarBloqueio(bloqueioResponse)){
-                BloqueioCartao bloqueio = bloqueioResponse.toModel(request, cartaoBanco.get());
+                BloqueioCartao bloqueio = bloqueioResponse.toModel(userAgent, ipCliente, cartaoBanco.get());
                 bloqueioCartaoRepository.save(bloqueio);
                 metricas.incrementarBloqueiosRealizados();
             }

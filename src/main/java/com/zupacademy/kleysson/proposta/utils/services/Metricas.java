@@ -51,6 +51,10 @@ public class Metricas {
         this.counterCartoesAssociados.increment();
     }
 
+    public void incrementarCartoesAssociados(Double valor){
+        this.counterCartoesAssociados.increment(valor);
+    }
+
     public void incrementarBiometrias() {
         this.counterCadastroBiometria.increment();
     }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,13 +38,17 @@ public class AssociarCartao {
         logger.info("Verificando cartões...");
 
         List<Proposta> propostasSemCartao = propostaRepository.findByStatusPropostaAndCartaoIsNull(StatusProposta.ELEGIVEL);
+        List<Cartao> listaCartoes = new ArrayList<>();
         propostasSemCartao.forEach(p -> {
             Cartao cartao = consultarCartao(p.getId());
             if (Objects.nonNull(cartao)){
-                cartaoRepository.save(cartao);
-                metricas.incrementarCartoesAssociados();
+                listaCartoes.add(cartao);
             }
         });
+        if(!listaCartoes.isEmpty()){
+            cartaoRepository.saveAll(listaCartoes);
+            metricas.incrementarCartoesAssociados((double) listaCartoes.size());
+        }
     }
 
     private Cartao consultarCartao(Long id) {

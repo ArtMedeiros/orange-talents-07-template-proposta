@@ -5,13 +5,13 @@ import com.zupacademy.kleysson.proposta.model.Biometria;
 import com.zupacademy.kleysson.proposta.repository.BiometriaRepository;
 import com.zupacademy.kleysson.proposta.repository.CartaoRepository;
 import com.zupacademy.kleysson.proposta.utils.services.Metricas;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Base64;
 import java.util.Optional;
 
 @RestController
@@ -47,6 +47,11 @@ public class BiometriaController {
     }
 
     private boolean checarIntegridade(String valor) {
-        return Base64.isBase64(valor);
+        try {
+            Base64.getDecoder().decode(valor);
+            return true;
+        }catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }
